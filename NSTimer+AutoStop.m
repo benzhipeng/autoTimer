@@ -41,15 +41,11 @@
 }
 
 - (void)dealloc{
-    
-//    [self.timer invalidate];
-//    self.timer = nil;
-    NSLog(@"1111");
+
 }
 @end
 
 
-static const void* autoStopKey = &autoStopKey;
 @implementation NSTimer (AutoStop)
 + (NSTimer*)scheduledTimerWithAutoTimeInterval:(NSTimeInterval)timeInterval
                                 target:(id)target
@@ -65,7 +61,7 @@ static const void* autoStopKey = &autoStopKey;
     
     AutoStopTracker* tracker = [[AutoStopTracker alloc] init];
     tracker.autoStopTarget = autoStopTarget;
-    objc_setAssociatedObject(target, autoStopKey, tracker,OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(target, (__bridge void *)tracker, tracker,OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return timer;
 }
 
@@ -83,6 +79,6 @@ static const void* autoStopKey = &autoStopKey;
     
     AutoStopTracker* tracker = [[AutoStopTracker alloc] init];
     tracker.autoStopTarget = autoStopTarget;
-    objc_setAssociatedObject(target, autoStopKey, tracker,OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(target, (__bridge void *)tracker, tracker,OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 @end
